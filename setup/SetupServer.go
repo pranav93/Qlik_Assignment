@@ -13,7 +13,7 @@ func Server() *gin.Engine {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "Hello World"})
 	})
-	// r.GET("/cart/:id/", controllers.GetCart)
+	r.GET("/message/:id/", controllers.GetMessage)
 	r.POST("/messages/", controllers.CreateMessage)
 	// r.PATCH("/cart/save/:id/", controllers.UpdateCart)
 	// r.DELETE("/cart/:id/", controllers.DeleteCart)

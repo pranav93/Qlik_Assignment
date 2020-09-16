@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/pranav93/Qlik_Assignment/models"
 
@@ -25,6 +26,23 @@ func CreateMessage(c *gin.Context) {
 	messageID, err := models.CreateMessage(input.Message)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{"messageID": messageID}})
+}
+
+// GetMessage GetMessage
+func GetMessage(c *gin.Context) {
+	ID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+
+	message, err := models.GetMessage(ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"message": message}})
 }

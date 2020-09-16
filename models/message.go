@@ -10,9 +10,7 @@ type Message struct {
 
 // CreateMessage CreateMessage
 func CreateMessage(message string) (int64, error) {
-	log.Println("before GetDBConnection")
 	db := GetDBConnection()
-	log.Println("after GetDBConnection")
 	tx := db.MustBegin()
 	q := `
 	INSERT INTO messages(message)
@@ -28,4 +26,23 @@ func CreateMessage(message string) (int64, error) {
 	}
 	tx.Commit()
 	return ID, nil
+}
+
+// GetMessage GetMessage
+func GetMessage(ID int) (*Message, error) {
+	db := GetDBConnection()
+	tx := db.MustBegin()
+	q := `
+	SELECT * FROM messages 
+	WHERE id=$1 LIMIT 1`
+
+	var m Message
+	err := tx.Get(&m, q, ID)
+	if err != nil {
+		log.Println("Error is", err)
+		tx.Rollback()
+		return nil, err
+	}
+	log.Println("Message is", m)
+	return &m, nil
 }
