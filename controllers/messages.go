@@ -46,3 +46,29 @@ func GetMessage(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{"message": message}})
 }
+
+// DeleteMessage DeleteMessage
+func DeleteMessage(c *gin.Context) {
+	ID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+
+	err = models.DeleteMessage(ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"deleted": true}})
+}
+
+// GetMessageList GetMessageList
+func GetMessageList(c *gin.Context) {
+	message, err := models.GetMessageList()
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"message_list": message}})
+}

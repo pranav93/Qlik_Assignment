@@ -1,10 +1,12 @@
 package models
 
-import "log"
+import (
+	"log"
+)
 
 // Message Message
 type Message struct {
-	ID      int64  `json:"id"`
+	ID      int    `json:"id"`
 	Message string `json:"title"`
 }
 
@@ -45,4 +47,52 @@ func GetMessage(ID int) (*Message, error) {
 	}
 	log.Println("Message is", m)
 	return &m, nil
+}
+
+// DeleteMessage DeleteMessage
+func DeleteMessage(ID int) error {
+	db := GetDBConnection()
+	tx := db.MustBegin()
+	q := `
+	DELETE FROM messages 
+	WHERE id=$1`
+
+	_, err := tx.Exec(q, ID)
+	if err != nil {
+		log.Println("Error is", err)
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
+// GetMessageList GetMessageList
+func GetMessageList() ([]Message, error) {
+	db := GetDBConnection()
+	q := `
+	SELECT * FROM messages`
+
+	rows, err := db.Query(q)
+	if err != nil {
+		log.Println("Error is", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var m []Message
+	for rows.Next() {
+		var ID int
+		var message string
+		err = rows.Scan(&ID, &message)
+		if err != nil {
+			// handle this error
+			panic(err)
+		}
+		m = append(m, Message{
+			ID:      ID,
+			Message: message,
+		})
+	}
+	return m, nil
 }
