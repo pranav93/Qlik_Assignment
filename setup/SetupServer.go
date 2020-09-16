@@ -14,6 +14,7 @@ func Server() *gin.Engine {
 		c.JSON(http.StatusOK, gin.H{"data": "Hello World"})
 	})
 	r.GET("/message/:id/", controllers.GetMessage)
+	r.GET("/message/:id/palindrome/", controllers.CheckPalindrome)
 	r.GET("/messages/", controllers.GetMessageList)
 	r.POST("/messages/", controllers.CreateMessage)
 	r.DELETE("/message/:id/", controllers.DeleteMessage)

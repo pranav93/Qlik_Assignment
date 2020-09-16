@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/pranav93/Qlik_Assignment/models"
+	"github.com/pranav93/Qlik_Assignment/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -71,4 +72,21 @@ func GetMessageList(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{"message_list": message}})
+}
+
+// CheckPalindrome CheckPalindrome
+func CheckPalindrome(c *gin.Context) {
+	ID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+
+	message, err := models.GetMessage(ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"data": gin.H{"error": err.Error()}})
+		return
+	}
+	isPalindrome := utils.CheckPalindrome(message.Message)
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"is_palindrome": isPalindrome}})
 }
