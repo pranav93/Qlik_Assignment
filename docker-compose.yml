@@ -1,0 +1,23 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+        - "8080:3000"
+    depends_on:
+      - postgres
+    env_file:
+        - ./config.env
+  postgres:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+    - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down  
+    environment:
+      POSTGRES_USER: 'awesome_user'
+      POSTGRES_PASSWORD: 'secret_password'
+      POSTGRES_DB: 'qlik_database'
+
+volumes:
+    database-data: # named volume
