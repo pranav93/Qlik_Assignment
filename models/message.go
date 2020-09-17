@@ -7,7 +7,7 @@ import (
 // Message Message
 type Message struct {
 	ID      int    `json:"id"`
-	Message string `json:"title"`
+	Message string `json:"message"`
 }
 
 // CreateMessage CreateMessage

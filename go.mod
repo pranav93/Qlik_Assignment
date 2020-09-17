@@ -3,6 +3,7 @@ module github.com/pranav93/Qlik_Assignment
 go 1.14
 
 require (
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/jackc/pgx/v4 v4.8.1
 	github.com/jmoiron/sqlx v1.2.0
