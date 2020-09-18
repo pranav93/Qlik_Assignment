@@ -10,8 +10,15 @@ import (
 	_ "github.com/lib/pq" // driver
 )
 
+var db *sqlx.DB
+
 // GetDBConnection GetDBConnection
 func GetDBConnection() *sqlx.DB {
+
+	if db != nil {
+		return db
+	}
+
 	dbPort, err := strconv.Atoi(os.Getenv("DB_PORT"))
 	if err != nil {
 		log.Fatalln(err)
@@ -26,7 +33,7 @@ func GetDBConnection() *sqlx.DB {
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_SSLMODE"),
 	)
-	db, err := sqlx.Connect("postgres", connectionString)
+	db, err = sqlx.Connect("postgres", connectionString)
 	// remove hardcoding
 	if err != nil {
 		log.Fatalln(err)

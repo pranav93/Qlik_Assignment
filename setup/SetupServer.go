@@ -2,6 +2,7 @@ package setup
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,11 @@ import (
 func Server() *gin.Engine {
 	r := gin.Default()
 
-	r.Use(cors.Default())
+	config := cors.DefaultConfig()
+	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
+	config.AllowOrigins = []string{allowedOrigin}
+
+	r.Use(cors.New(config))
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "Hello World"})

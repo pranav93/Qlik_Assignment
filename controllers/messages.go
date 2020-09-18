@@ -29,7 +29,7 @@ func CreateMessage(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": gin.H{"messageID": messageID}})
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"id": messageID}})
 }
 
 // GetMessage GetMessage
