@@ -2,23 +2,15 @@ package setup
 
 import (
 	"net/http"
-	// "os"
 
-	// "github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/pranav93/Qlik_Assignment/controllers"
 )
 
-// Server Creates a gin instance and returns int
+// Server Creates a gin instance and returns it
 func Server() *gin.Engine {
 	r := gin.Default()
-
-	// config := cors.DefaultConfig()
-	// allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
-	// config.AllowOrigins = []string{allowedOrigin}
-
-	// r.Use(cors.New(config))
 
 	r.GET("/api/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "Hello World"})
