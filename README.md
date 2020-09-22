@@ -4,7 +4,8 @@ Assignment solution for SRE
 
 ## How to run locally?
 
-Make sure that you have docker and compose installed on your dev machine
+Make sure that you have docker and compose installed on your dev machine.
+Run the following commands in terminal.
 
 ```bash
 git clone https://github.com/pranav93/Qlik_Assignment.git
@@ -17,7 +18,7 @@ Create a `config.env`, like this
 ```bash
 touch config.env
 ```
-
+Add something like the following
 ```env
 DB_USERNAME=great_user
 DB_PASSWORD=super_secret_password
@@ -39,7 +40,14 @@ Now run the backend
 docker-compose up
 ```
 
-## What does each of these env fields even mean?
+Once you curl the following, you should get a response.
+```bash
+curl localhost:8080/api/
+```
+
+Now, once the backend is running as expected, refer [https://github.com/pranav93/Qlik_Frontend] to setup the frontend
+
+## What do these env fields even mean?
 
 | Field             |                                Value                                |
 | ----------------- | :-----------------------------------------------------------------: |
