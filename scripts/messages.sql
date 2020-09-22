@@ -7,5 +7,6 @@ create extension if not exists "uuid-ossp";
 
 CREATE TABLE latency_information (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    message VARCHAR(255)
+    latency_ns VARCHAR(255),
+    path VARCHAR(255)
 );

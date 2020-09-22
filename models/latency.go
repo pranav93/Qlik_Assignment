@@ -7,16 +7,16 @@ import (
 )
 
 // LogLatency LogLatency
-func LogLatency(latency int64) (uuid.UUID, error) {
+func LogLatency(latency int64, path string) (uuid.UUID, error) {
 	db := GetDBConnection()
 	tx := db.MustBegin()
 	q := `
-	INSERT INTO latency_information(latency)
-	VALUES ($1) 
+	INSERT INTO latency_information(latency_ns, path)
+	VALUES ($1, $2)
 	RETURNING id`
 
 	var ID uuid.UUID
-	err := tx.Get(&ID, q, latency)
+	err := tx.Get(&ID, q, latency, path)
 	if err != nil {
 		log.Println("Error is", err)
 		tx.Rollback()

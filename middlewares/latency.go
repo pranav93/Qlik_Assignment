@@ -12,13 +12,12 @@ import (
 func LatencyMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		t := time.Now()
-
 		c.Next()
 
 		latency := time.Since(t)
 		log.Println(latency)
 		log.Println(latency.Nanoseconds())
 		// Running func in separate goroutine
-		go models.LogLatency(latency.Nanoseconds())
+		go models.LogLatency(latency.Nanoseconds(), c.Request.URL.Path)
 	}
 }

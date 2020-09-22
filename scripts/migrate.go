@@ -18,8 +18,9 @@ func Migrate() {
 
 	CREATE TABLE IF NOT EXISTS latency_information (
 		id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-		latency NUMERIC(11)
-	);
+		latency_ns NUMERIC(11),
+		path VARCHAR(255)
+		);
 	`
 	db := models.GetDBConnection()
 	_, err := db.Exec(schema)
