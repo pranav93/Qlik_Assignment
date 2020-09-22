@@ -13,6 +13,13 @@ func Migrate() {
 		id serial PRIMARY KEY,
 		message VARCHAR(255)
 	);
+
+	create extension if not exists "uuid-ossp";
+
+	CREATE TABLE IF NOT EXISTS latency_information (
+		id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+		latency NUMERIC(11)
+	);
 	`
 	db := models.GetDBConnection()
 	_, err := db.Exec(schema)

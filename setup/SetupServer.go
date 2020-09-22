@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/pranav93/Qlik_Assignment/controllers"
+	"github.com/pranav93/Qlik_Assignment/middlewares"
 )
 
 // Server Creates a gin instance and returns int
@@ -26,6 +27,8 @@ func Server() *gin.Engine {
 		r.Use(cors.New(config))
 
 	}
+
+	r.Use(middlewares.LatencyMiddleware())
 
 	r.GET("/api/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "Hello World"})
